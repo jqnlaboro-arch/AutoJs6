@@ -34,19 +34,22 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Fix Missing Imports in LogBottomSheet (Keep Code Intact)
+      - name: Fix Missing Imports in LogBottomSheet (Correct Packages)
         run: |
-          # Definimos los imports correctos que el archivo necesita para compilar
-          IMPORT_1="import org.autojs.autojs.autojs.AutoJs.Companion.getInstance"
-          IMPORT_2="import org.autojs.autojs.autojs.AutoJs.Companion.globalConsole"
+          # Definimos las rutas de importación reales del core de AutoJs6
+          IMPORT_1="import org.autojs.autojs.AutoJs"
+          IMPORT_2="import org.autojs.autojs.execution.ExecutionConfig"
           
-          # Los insertamos limpiamente justo debajo de la declaración del paquete
+          # Insertamos los componentes legítimos debajo de la declaración del paquete
           sed -i "s|package org.autojs.autojs.ui.log|package org.autojs.autojs.ui.log\n\n${IMPORT_1}\n${IMPORT_2}|" app/src/main/java/org/autojs/autojs/ui/log/LogBottomSheet.kt
   
-      - name: Build Optimized arm64-v8a APKs
+      - name: Force Compatible R8 and Build Specific arm64-v8a APKs
         run: |
-          # Compilamos de forma limpia con R8 optimizado activado por defecto
-          ./gradlew clean :app:assembleInrtRelease :app:assembleAppRelease -Pandroid.injected.build.abi=arm64-v8a --no-daemon
+          # 1. Regeneramos el init.gradle para que R8 ignore el bloqueo "Should never be called"
+          echo "buildscript { dependencies { classpath('com.android.tools:r8:8.5.10') } }" > init.gradle
+          
+          # 2. Compilamos de forma limpia inyectando tu arquitectura arm64-v8a
+          ./gradlew clean :app:assembleInrtRelease :app:assembleAppRelease -I init.gradle -Pandroid.injected.build.abi=arm64-v8a --no-daemon
     
       - name: Upload arm64 artifacts
         id: upload-arm64-apk
