@@ -63,3 +63,11 @@ jobs:
           name: release-universal-apk
           path: app/build/outputs/apk/app/release/*-universal.apk
         continue-on-error: true
+      
+      - name: Capturar Reporte de Errores de Kotlin
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-de-errores
+          path: build/reports/problems/
+        
