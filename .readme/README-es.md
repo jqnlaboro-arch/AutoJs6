@@ -168,7 +168,7 @@ En comparación con la versión final de Auto.js `4.1.1 Alpha2`, AutoJs6 ha real
 
 ###### 2026/03/14
 
-* `Nuevo` Funcion Centro de plugins, compatible con operaciones como instalar/desinstalar/actualizar plugins (entrada: boton del cajon de inicio/pestana de inicio)
+* `Nuevo` Función Centro de plugins, compatible con operaciones como instalar/desinstalar/actualizar plugins (entrada: boton del cajon de inicio/pestana de inicio)
 * `Nuevo` Funcion Historial de versiones, compatible con ver/restaurar versiones historicas de archivos editables (entrada: boton del cajon de inicio/menu del administrador de archivos/menu del editor de codigo)
 * `Nuevo` Funcion Papelera, compatible con ver/restaurar archivos/carpetas eliminados (entrada: boton del cajon de inicio)
 * `Nuevo` Plugin Paddle OCR (PP-OCRv5), para reconocimiento optico de caracteres
